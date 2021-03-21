@@ -100,7 +100,7 @@
         2. Writing the newName variable back to the input element through the "newName" property
       -->
       <!-- <input type="text" v-bind:value="name" @input="setName" /> -->
-      <!-- v-model = v-bind:value + @input ; like a shortcut-->
+      <!-- v-model = v-bind:value + @input ; it's just a shortcut. No shorthand for v-model -->
       <input type="text" v-model="newName" />
       <input type="text" v-model="newLastName" />
       <button @click="resetInput">Reset Input</button>
