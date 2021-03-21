@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+    <script src="assignment.js" defer></script>
+    <script src="assignment2.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Course Goals</h1>
+    </header>
+    <!-- Chapter 1: data properties and methods -->
+    <section id="user-goal">
+      <h2>My Course Goal</h2>
+      <!-- 
+        Using v-bind tells Vue to dynamically set the attribute of an HTML element
+        So that we can use the data in Data property even for value of an attribute
+      -->
+      <p>Learn more <a v-bind:href="vueLink">about Vue</a>.</p>
+      <!-- 
+        Other than referencing the Vue data properties, We can even execute simple Javascript expression inside {{}}.
+        We can also execute methods inside by passing a parenthesis
+      -->
+      <p>{{ outputGoal() }}</p>
+      <!-- 
+        v-html allows Vue to produce HTML element. However, this produces potential security threat for XSS
+        Thus, Not suggested to use unless 100% necessary and with sufficient security measure 
+      -->
+      <!-- <p v-html="h1Title"></p>
+      <p v-html="outputHtmlEl()"></p> -->
+    </section>
+    <section id="assignment">
+      <h2>[Assignment1]My Profile</h2>
+      <!-- 1) Output your name -->
+      <p>{{ name }}</p>
+      <!-- 2) Output your age -->
+      <p>{{ age }}</p>
+      <!-- 3) Output your age + 5 -->
+      <p>{{ age + 5 }}</p>
+      <!-- 4) Output a random number (0 to 1) -->
+      <p>Favorite Number: {{ randomNumber() }}</p>
+      <div>
+        <!-- 5) Display some image you found via Google -->
+        <img v-bind:src="image" />
+      </div>
+      <!-- 6) Prepopulate the input field with your name via the "value" attribute -->
+      <input type="text" v-bind:value="name" />
+    </section>
+    <header>
+      <h1>Vue Events</h1>
+    </header>
+    <!-- Chapter 2: handling user input -->
+    <section id="events">
+      <h2>Events in Action</h2>
+      <!-- 
+        v-on can listen to any event that is available for the HTML element
+        we can actually put counter++ inside v-on:click. But it is not a good practice
+        because html is supposed to be presenting the content while JS is responsible for handling the logic
+      -->
+      <!-- <button v-on:click="counter++">Add</button> -->
+      <!-- 
+        We Shouldn't add parenthesis as you are referencing the function. It should only be called when the click event occurs. Vue actually accepts both with or without parenthesis though.
+        We can overwrite the default event object to be passed to the function by providing a customized input
+        e.g. the 10 in add(10) is a customized input
+      -->
+      <button v-on:click="add(10)">Add 10</button>
+      <button v-on:click="minus(5)">Minus 5</button>
+      <!-- 
+        v-once tells Vue that any dynamic data binding should only be evaluated once; so any changes to the data 
+        binded will not be reflected
+      -->
+      <p v-once>Starting Counter: {{ counter }}</p>
+      <p>Result: {{ counter }}</p>
+      <p>Set Name without Lastname</p>
+      <input type="text" v-on:input="setName" v-on:keyup="confirmInput" />
+      <p>Set Name with Lastname, click enter to confirm</p>
+      <!-- To preserve the event object, we use "$event" for the method -->
+      <input
+        type="text"
+        v-on:input="setName($event, 'Lau')"
+        v-on:keyup.enter="confirmInput"
+      />
+      <p>Your Name: {{ confirmedName }}</p>
+      <p>Set Name with option to reset input</p>
+      <!-- Two way binding: both data binding and event binding together by
+        1. listening to the input element for updating the data "newName"
+        2. Writing the newName variable back to the input element through the "newName" property
+      -->
+      <!-- <input type="text" v-bind:value="name" v-on:input="setName" /> -->
+      <!-- v-model = v-bind:value + v-on:input ; like a shortcut-->
+      <input type="text" v-model="newName" />
+      <input type="text" v-model="newLastName" />
+      <button v-on:click="resetInput">Reset Input</button>
+      <p>Your Name: {{ newName }}</p>
+      <!-- 
+        **** Here is how Vue works: ****
+        When any Vue-controlled element changes, Vue scans for the page to see what it needs to update for the page / rerender => e.g. when we press the add button, the counter data property updates and so Vue updated the
+        <p>Result: {{ counter }}</p> HTML element.
+        Then, for any method used on the page, e.g. outputFullname() below, since Vue does not know whether it uses
+        the counter variable or any other data property, it always re-executes the method again to ensure that the output of outputFullname() is always updated.
+        Therefore, from performance perspective, using methods is not ideal for Vue as Vue re-executes the methods whenever anything changes
+      -->
+      <!-- <p>Full Name: {{ outputFullname() }}</p> -->
+      <!-- 
+        Ideal solution: using computed property => No parenthesis, we use them like data properties, not functions 
+        Vue first checks from data() to find fullname. If couldn't find, then it looks for fullname in computed(). 
+      -->
+      <p>[Computed property]Full Name: {{ fullname }}</p>
+      <p>[watcher]Full Name: {{ newFullname }}</p>
+      <!-- 1. Event modifiers-->
+      <!-- 
+        The syntax is v-on:<event>.<event modifier> and "prevent" is a event modifier that prevent form submission default behavior of refreshing the page   
+        Reference: https://vuejs.org/v2/guide/events.html#Event-Modifiers 
+      -->
+      <!-- 2. Modifiers that changes when the event occurs-->
+      <!-- v-on:click.middle or v-on:click.right to indicate the eventHandler is fired only middle / right mouse button is clicked -->
+      <!-- v-on:keyup -->
+      <form v-on:submit.prevent="submitForm">
+        <input type="text" />
+        <button>Sign Up</button>
+      </form>
+    </section>
+    <section id="assignment2">
+      <h2>[Assignment2]Event Practice</h2>
+      <!-- 1) Show an alert (any text of your choice) when the button is pressed -->
+      <button v-on:click.prevent="showAlert">Show Alert</button>
+      <hr />
+      <!-- 2) Register the user input on "keydown" and output it in the paragraph (hint: event.target.value helps) -->
+      <input type="text" v-on:keydown="showOutput" />
+      <p>{{ output }}</p>
+      <hr />
+      <!-- 3) Repeat 2) but only output the entered value if the ENTER key was pressed -->
+      <!-- this only fired when enter is pressed and released-->
+      <input
+        type="text"
+        v-on:keydown="showOutput"
+        v-on:keyup.enter="confirmOutput"
+      />
+      <p>{{ confirmedOutput }}</p>
+    </section>
+  </body>
+</html>
