@@ -62,18 +62,22 @@
     <section id="events">
       <h2>Events in Action</h2>
       <!-- 
-        v-on can listen to any event that is available for the HTML element
-        we can actually put counter++ inside v-on:click. But it is not a good practice
+        v-on (Shorthand: @) can listen to any event that is available for the HTML element
+        we can actually put counter++ inside @click. But it is not a good practice
         because html is supposed to be presenting the content while JS is responsible for handling the logic
+
+        How to use shorthand?
+        e.g. <button v-on:click="counter++">Add</button>
+        becomes e.g. <button @click="counter++">Add</button>
       -->
-      <!-- <button v-on:click="counter++">Add</button> -->
+      <!-- <button @click="counter++">Add</button> -->
       <!-- 
         We Shouldn't add parenthesis as you are referencing the function. It should only be called when the click event occurs. Vue actually accepts both with or without parenthesis though.
         We can overwrite the default event object to be passed to the function by providing a customized input
         e.g. the 10 in add(10) is a customized input
       -->
-      <button v-on:click="add(10)">Add 10</button>
-      <button v-on:click="minus(5)">Minus 5</button>
+      <button @click="add(10)">Add 10</button>
+      <button @click="minus(5)">Minus 5</button>
       <!-- 
         v-once tells Vue that any dynamic data binding should only be evaluated once; so any changes to the data 
         binded will not be reflected
@@ -81,13 +85,13 @@
       <p v-once>Starting Counter: {{ counter }}</p>
       <p>Result: {{ counter }}</p>
       <p>Set Name without Lastname</p>
-      <input type="text" v-on:input="setName" v-on:keyup="confirmInput" />
+      <input type="text" @input="setName" @keyup="confirmInput" />
       <p>Set Name with Lastname, click enter to confirm</p>
       <!-- To preserve the event object, we use "$event" for the method -->
       <input
         type="text"
-        v-on:input="setName($event, 'Lau')"
-        v-on:keyup.enter="confirmInput"
+        @input="setName($event, 'Lau')"
+        @keyup.enter="confirmInput"
       />
       <p>Your Name: {{ confirmedName }}</p>
       <p>Set Name with option to reset input</p>
@@ -95,11 +99,11 @@
         1. listening to the input element for updating the data "newName"
         2. Writing the newName variable back to the input element through the "newName" property
       -->
-      <!-- <input type="text" v-bind:value="name" v-on:input="setName" /> -->
-      <!-- v-model = v-bind:value + v-on:input ; like a shortcut-->
+      <!-- <input type="text" v-bind:value="name" @input="setName" /> -->
+      <!-- v-model = v-bind:value + @input ; like a shortcut-->
       <input type="text" v-model="newName" />
       <input type="text" v-model="newLastName" />
-      <button v-on:click="resetInput">Reset Input</button>
+      <button @click="resetInput">Reset Input</button>
       <p>Your Name: {{ newName }}</p>
       <!-- 
         **** Here is how Vue works: ****
@@ -118,13 +122,13 @@
       <p>[watcher]Full Name: {{ newFullname }}</p>
       <!-- 1. Event modifiers-->
       <!-- 
-        The syntax is v-on:<event>.<event modifier> and "prevent" is a event modifier that prevent form submission default behavior of refreshing the page   
+        The syntax is @<event>.<event modifier> and "prevent" is a event modifier that prevent form submission default behavior of refreshing the page   
         Reference: https://vuejs.org/v2/guide/events.html#Event-Modifiers 
       -->
       <!-- 2. Modifiers that changes when the event occurs-->
-      <!-- v-on:click.middle or v-on:click.right to indicate the eventHandler is fired only middle / right mouse button is clicked -->
-      <!-- v-on:keyup -->
-      <form v-on:submit.prevent="submitForm">
+      <!-- @click.middle or @click.right to indicate the eventHandler is fired only middle / right mouse button is clicked -->
+      <!-- @keyup -->
+      <form @submit.prevent="submitForm">
         <input type="text" />
         <button>Sign Up</button>
       </form>
@@ -134,19 +138,15 @@
     <section id="assignment2">
       <h2>[Assignment2]Event Practice</h2>
       <!-- 1) Show an alert (any text of your choice) when the button is pressed -->
-      <button v-on:click.prevent="showAlert">Show Alert</button>
+      <button @:click.prevent="showAlert">Show Alert</button>
       <hr />
       <!-- 2) Register the user input on "keydown" and output it in the paragraph (hint: event.target.value helps) -->
-      <input type="text" v-on:keydown="showOutput" />
+      <input type="text" @keydown="showOutput" />
       <p>{{ output }}</p>
       <hr />
       <!-- 3) Repeat 2) but only output the entered value if the ENTER key was pressed -->
       <!-- this only fired when enter is pressed and released-->
-      <input
-        type="text"
-        v-on:keydown="showOutput"
-        v-on:keyup.enter="confirmOutput"
-      />
+      <input type="text" @keydown="showOutput" @keyup.enter="confirmOutput" />
       <p>{{ confirmedOutput }}</p>
     </section>
   </body>
