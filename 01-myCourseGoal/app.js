@@ -84,10 +84,11 @@ const eventApp = Vue.createApp({
     },
   },
   // 3. Computed option for Computed Properties
-  // It is for returning a value whenever certain data property(ies) changes
+  // It is for returning a computed value whenever certain data property(ies) changes
   computed: {
     // Naming convension: although it is a method, but it is used as a data property
     // So we use fullname instead of outputFullname
+    // For fullname, it runs only when newName or newLastName changes
     fullname() {
       console.log('Running again...');
       if (this.newName === '' || this.newLastName === '') return '';
@@ -96,14 +97,13 @@ const eventApp = Vue.createApp({
   },
   // 4. Watch option for watchers
   // We see that watcher is doing sth similar to computed properties. Can watcher replace them?
-  // Imagine a situation when we need to watch two variables (newName, newLastName) for one newFullname property
+  // Imagine a situation when we need to watch two variables (e.g. see newName and newLastName below) for one newFullname property
   // We then need to write a watcher for both newName and newLastName with similar code
   // This execution is worse than computed property
-  // So why we need watcher? It is mainly use for
-  // 1. doing something when the data property reaches certain value
-  // 2. Sending HTTP request when certain data changes
-  // 3. Set a timer when certain data changes
-  // For example, resetting the counter when it reaches 100
+  // So why we need watcher? It is mainly use for any non-data update
+  // 1. Sending HTTP request when data changes / reaches certain value
+  // 2. doing something when the data property reaches certain value
+  // For example, resetting the counter or even set a timer to reset counter when it reaches 100
   // You will understand more by watching B and C usage below
   watch: {
     // A. Not ideal usage of watcher: Doing something whenever the data value changes
