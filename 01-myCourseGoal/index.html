@@ -22,10 +22,14 @@
     <section id="user-goal">
       <h2>My Course Goal</h2>
       <!-- 
-        Using v-bind tells Vue to dynamically set the attribute of an HTML element
+        Using v-bind (shorthand is a colon) tells Vue to dynamically set the attribute of an HTML element
         So that we can use the data in Data property even for value of an attribute
+
+        How to use the shorthand?
+        e.g. <a :href="vueLink">about Vue</a>
+        becomes <a :href="vueLink">about Vue</a>
       -->
-      <p>Learn more <a v-bind:href="vueLink">about Vue</a>.</p>
+      <p>Learn more <a :href="vueLink">about Vue</a>.</p>
       <!-- 
         Other than referencing the Vue data properties, We can even execute simple Javascript expression inside {{}}.
         We can also execute methods inside by passing a parenthesis
@@ -50,10 +54,10 @@
       <p>Favorite Number: {{ randomNumber() }}</p>
       <div>
         <!-- 5) Display some image you found via Google -->
-        <img v-bind:src="image" />
+        <img :src="image" />
       </div>
       <!-- 6) Prepopulate the input field with your name via the "value" attribute -->
-      <input type="text" v-bind:value="name" />
+      <input type="text" :value="name" />
     </section>
     <header>
       <h1>Vue Events</h1>
@@ -99,8 +103,8 @@
         1. listening to the input element for updating the data "newName"
         2. Writing the newName variable back to the input element through the "newName" property
       -->
-      <!-- <input type="text" v-bind:value="name" @input="setName" /> -->
-      <!-- v-model = v-bind:value + @input ; it's just a shortcut. No shorthand for v-model -->
+      <!-- <input type="text" :value="name" @input="setName" /> -->
+      <!-- v-model = :value + @input ; it's just a shortcut. No shorthand for v-model -->
       <input type="text" v-model="newName" />
       <input type="text" v-model="newLastName" />
       <button @click="resetInput">Reset Input</button>
@@ -133,7 +137,7 @@
         <button>Sign Up</button>
       </form>
       <h2>Comparison</h2>
-      <img style="width: 95%" v-bind:src="comparisonImg" />
+      <img style="width: 95%" :src="comparisonImg" />
     </section>
     <section id="assignment2">
       <h2>[Assignment2]Event Practice</h2>
