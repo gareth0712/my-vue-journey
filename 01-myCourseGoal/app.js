@@ -47,6 +47,7 @@ const eventApp = Vue.createApp({
       newName: '',
       newLastName: '',
       newFullname: '',
+      comparisonImg: 'public/methods-vs-computed-vs-watch.png',
     };
   },
   methods: {
@@ -83,6 +84,7 @@ const eventApp = Vue.createApp({
     },
   },
   // 3. Computed option for Computed Properties
+  // It is for returning a value whenever certain data property(ies) changes
   computed: {
     // Naming convension: although it is a method, but it is used as a data property
     // So we use fullname instead of outputFullname
@@ -93,15 +95,22 @@ const eventApp = Vue.createApp({
     },
   },
   // 4. Watch option for watchers
+  // We see that watcher is doing sth similar to computed properties. Can watcher replace them?
+  // Imagine a situation when we need to watch two variables (newName, newLastName) for one newFullname property
+  // We then need to write a watcher for both newName and newLastName with similar code
+  // This execution is worse than computed property
+  // So why we need watcher? It is mainly use for
+  // 1. doing something when the data property reaches certain value
+  // 2. Sending HTTP request when certain data changes
+  // 3. Set a timer when certain data changes
+  // For example, resetting the counter when it reaches 100
+  // You will understand more by watching B and C usage below
   watch: {
+    // A. Not ideal usage of watcher: Doing something whenever the data value changes
     // Repeat the data / computed properties' name to set as a watcher of that property
     // So it will fire everytime the data property "name" changes
     // 1st argument: "value" argument refers to the latest value of the data / computed property
     // 2nd argument: "oldValue" argument refers to the old value of the data / computed property
-    // Can watcher replace computed properties?
-    // Imagine a situation when we need to watch two variables (newName, newLastName) for one newFullname property
-    // We then need to write a watcher for both newName and newLastName with similar code
-    // This execution is worse than computed property
     newName(value) {
       // We don't return anything as it is not a callable function
       if (value === '') {
@@ -115,6 +124,23 @@ const eventApp = Vue.createApp({
     //     this.newFullname = '';
     //   } else {
     //     this.newFullname = `${this.newName} ${value}`;
+    //   }
+    // },
+    ////////////////////////////////////
+    // B. Resetting the data value when it reaches certain value
+    // You will know why it's the ideal usage when u try to use computed property for this kind of event
+    counter(value) {
+      if (value > 100) this.counter = 0;
+    },
+    // C. Set a timer to reset value when it reaches 100
+    // counter(value) {
+    //   if (value > 100) {
+    //     // Using this keyword inside the callback fn of setTimeout will lose the counter data property
+    //     // So we store object referred by this in that to maintain the track of counter data property
+    //     const that = this;
+    //     setTimeout(() => {
+    //       that.counter = 0;
+    //     }, 2000);
     //   }
     // },
   },
