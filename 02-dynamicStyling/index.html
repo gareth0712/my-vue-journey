@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+    <script src="assignment4.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Dynamic Styling</h1>
+    </header>
+    <section id="styling">
+      <!-- 
+        How to do dynamic styling for elements?
+
+        A. Inline styling is against best practice. This is merely for demo purpose
+        to demonstrate that we are able to use inline styling with Vue in HTML elements.
+        We should always keep styling inside CSS file.
+
+        For the style object, if we spell the property with a dash, we need to use single quotation
+        { 'border-color': 'red' };
+        Otherwise, use camel casing
+        { borderColor: 'red' };
+
+        Reference: https://www.lifewire.com/avoid-inline-styles-for-css-3466846
+
+        <div
+          :style="{borderColor: boxASelected? 'red' : '#ccc'}"
+          class="demo"
+          @click="boxSelected('A')"
+        ></div>
+
+        B. using v-bind:class and use ternary operator to indicate the class name
+        Code readability becomes a concern when more conditions are added
+
+        <div
+          :class="boxASelected ? 'demo active' : 'demo'"
+          @click="boxSelected('A')"
+        ></div>
+
+        C. using v-bind:class + { classname: boolean } as a key-value pair in object.
+        We can use a regular class attribute and v-bind classes to make conditional styling easier.
+
+        <div
+          :class="{ demo: true, active: boxASelected }"
+          @click="boxSelected('A')"
+        ></div>
+
+        OR putting demo back to regular class attribute as it is always true. Vue will not do anything to regular class attribute. 
+        It evaluates the binded class attribute and combine to the class attribute
+
+        <div
+          class="demo"
+          :class="{ active: boxASelected }"
+          @click="boxSelected('A')"
+        ></div>
+
+        To do it better, we can put that to the Vue file as follows
+      -->
+      <div class="demo" :class="boxAClasses" @click="boxSelected('A')"></div>
+      <!-- 
+        One more syntax for dynamic styling by using array for class names
+      -->
+      <div
+        :class="['demo', {active: boxBSelected}]"
+        @click="boxSelected('B')"
+      ></div>
+      <div class="demo" :class="boxCClasses" @click="boxSelected('C')"></div>
+    </section>
+    <header>
+      <h1>[Assignment4]Vue Styling</h1>
+    </header>
+    <section id="assignment4">
+      <!-- 1) Fetch the user input and use it as a CSS class -->
+      <!-- The entered class should be added to the below paragraph -->
+      <!-- 
+        Using v-model is better approach even though we do not need the data binding for value of input. 
+        We can write less code by using v-model (no need the setInputValue method)
+      -->
+      <input type="text" @keyup="setInputValue" />
+      <!-- (available classes: "user1", "user2") -->
+      <p :class="setClass">Style me!</p>
+      <button @click="setVisibility">Toggle Paragraph</button>
+      <!-- 2) Use the "visible" and "hidden" classes to show/ hide the above paragraph -->
+      <!-- Clicking the button should toggle between the two options -->
+      <hr />
+
+      <!-- 3) Add dynamic inline styling to the below paragraph and let the user enter a background-color -->
+      <input type="text" @keyup="setInputColor" />
+      <p :style="{ backgroundColor: inputColor}">Style me inline!</p>
+    </section>
+  </body>
+</html>
