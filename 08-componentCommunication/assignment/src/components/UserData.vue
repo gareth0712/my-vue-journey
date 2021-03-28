@@ -1,6 +1,6 @@
 <template>
   <form>
-    <h2>Add User</h2>
+    <h2>Update User Information</h2>
     <div>
       <label>Name:</label>
       <input v-model="username" />
@@ -9,7 +9,7 @@
       <label>Age:</label>
       <input v-model="age" />
     </div>
-    <button @click.prevent="addUser">Submit</button>
+    <button @click.prevent="updateUser">Update</button>
   </form>
 </template>
 
@@ -22,8 +22,8 @@ export default {
     };
   },
   methods: {
-    addUser() {
-      this.$emit('add-user', this.username, this.age);
+    updateUser() {
+      this.$emit('update-user', this.username, this.age);
     },
   },
 };

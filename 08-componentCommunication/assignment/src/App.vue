@@ -4,15 +4,10 @@
       <h1>User Information</h1>
     </header>
     <ul>
-      <user-data @add-user="addUser"></user-data>
+      <user-data @update-user="updateUser"></user-data>
     </ul>
     <ul>
-      <active-user
-        v-for="user in users"
-        :key="user.username"
-        :username="user.username"
-        :age="user.age"
-      />
+      <active-user :username="username" :age="age" />
     </ul>
   </section>
 </template>
@@ -21,15 +16,14 @@
 export default {
   data() {
     return {
-      users: [],
+      username: '',
+      age: '',
     };
   },
   methods: {
-    addUser(username, age) {
-      this.users.push({
-        username,
-        age,
-      });
+    updateUser(username, age) {
+      this.username = username;
+      this.age = age;
     },
   },
 };
