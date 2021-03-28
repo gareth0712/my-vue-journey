@@ -23,8 +23,22 @@
       <p v-if="goals.length === 0">
         No goals have been added yet - please start adding some!
       </p>
-      <ul>
-        <li>Goal</li>
+      <ul v-else>
+        <!-- When we click the add button, only new item is added instead of refreshing the whole list -->
+        <!-- "goal in goals" here is the same as "goal of goals" in Javascript -->
+        <!-- <li v-for="goal in goals">{{ goal }}</li> -->
+        <li v-for="(goal, index) in goals">{{ goal }} - {{ index }}</li>
+        <!-- We can also loop through an object -->
+        <!-- <li v-for="(value, key) in {name: 'Max', age: 31}">
+          {{ key }}: {{ value }}
+        </li> -->
+        <!-- 1st: "name: Max" ; 2nd: "age: 31" -->
+        <!-- Object can also has their index -->
+        <!-- <li v-for="(value, key, index) in {name: 'Max', age: 31}">
+          {{ key }}: {{ value }} in index {{ index }}
+        </li> -->
+        <!-- Can work with numbers -->
+        <!-- <li v-for="num in 10">{{ num }}</li> -->
       </ul>
     </section>
   </body>
