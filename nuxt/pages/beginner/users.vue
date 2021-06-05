@@ -15,9 +15,9 @@ export default {
   },
   methods: {
     onLoadUser() {
-      this.$router.push('/users/' + this.userId);
+      this.$router.push('/beginner/users/' + this.userId);
     },
   },
-  layout: 'users',
+  layout: 'beginner',
 };
 </script>
