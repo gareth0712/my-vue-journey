@@ -1,5 +1,11 @@
 # Learn to use Nuxt
 
+# Knowledge
+
+## General Nuxt knowledge
+
+- When using import statement, both "~" and "@" (Interpret by webpack) sign refer to the root folder
+
 ## Build Setup
 
 ```bash

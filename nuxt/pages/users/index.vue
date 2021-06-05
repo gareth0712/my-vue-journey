@@ -1,13 +1,9 @@
 <template>
-  <div>test</div>
+  <div>Please enter the user id here and it should be number</div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      a: true,
-    };
-  },
+  layout: 'users',
 };
 </script>
