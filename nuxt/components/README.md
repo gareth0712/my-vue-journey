@@ -4,4 +4,36 @@
 
 The components directory contains your Vue.js Components.
 
-_Nuxt.js doesn't supercharge these components._
+### Import components
+
+- When you import components and provide a component name there in "component" property, e.g.
+
+```
+components: {
+  PostReview
+}
+```
+
+is basically the same as
+
+```
+components: {
+  PostReview: PostReview
+}
+```
+
+### Provide name of components
+
+Inside the component, you can provide a name and it merely helps for debugging purpose
+
+```
+export default {
+  ...
+  name: "PostReview"
+  ...
+}
+```
+
+### Naming convention
+
+- The official Vue style guide suggests that components that you really use only once should have a the at the beginning.
