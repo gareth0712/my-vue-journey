@@ -37,3 +37,13 @@ export default {
 ### Naming convention
 
 - The official Vue style guide suggests that components that you really use only once should have a the at the beginning.
+
+### Importing Images
+
+There are different ways to handle / import images in nuxt
+
+1. From "/assets"  
+   In css, use `url('~assets/images/main-page-background.jpg')`
+
+2. From '/static'  
+   In css, use `url('/main-page-background.jpg')`
