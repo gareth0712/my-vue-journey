@@ -1,8 +1,20 @@
 <template>
-  <div class="posts-page"></div>
+  <div class="posts-page">
+    <post-list />
+  </div>
 </template>
 
-<style scoped>
+<script>
+import PostList from '~/components/Posts/PostList.vue';
+
+export default {
+  components: {
+    PostList,
+  },
+};
+</script>
+
+<style lang="scss" scoped>
 .post-page {
   display: flex;
   justify-content: center;

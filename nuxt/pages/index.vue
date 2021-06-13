@@ -3,35 +3,16 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <section class="featured-posts">
-      <PostPreview
-        id="1"
-        thumbnail="/code.jpg"
-        title="Why coders like Typescript over Javascript"
-        previewText="This is my first post!"
-      />
-      <PostPreview
-        id="2"
-        thumbnail="/code2.jpg"
-        title="Why coders like Stack overflow"
-        previewText="This is my second post!"
-      />
-      <PostPreview
-        id="3"
-        thumbnail="/code3.jpg"
-        title="Why coders like VS Code"
-        previewText="This is my third post!"
-      />
-    </section>
+    <post-list />
   </div>
 </template>
 
 <script>
-import PostPreview from '~/components/Posts/PostPreview.vue';
+import PostList from '~/components/Posts/PostList';
 
 export default {
   components: {
-    PostPreview,
+    PostList,
   },
 };
 </script>
@@ -44,7 +25,7 @@ export default {
   box-sizing: border-box;
   background-position: center;
   background-size: cover;
-  background-image: url('~assets/images/main-page-background.jpg');
+  background-image: url('/main-page-background.jpg');
 }
 
 .intro h1 {
@@ -66,14 +47,5 @@ export default {
   .intro h1 {
     font-size: 2rem;
   }
-}
-
-.featured-posts {
-  display: flex;
-  padding: 20px;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
 }
 </style>
