@@ -1,6 +1,6 @@
 <template>
   <div id="beginner">
-    <BeginnerHeader />
+    <beginner-header />
     <nuxt />
   </div>
 </template>
