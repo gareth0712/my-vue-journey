@@ -74,6 +74,7 @@ I am learning Vue by chapters and I will update this readme as a summary of what
   e.g. `<p v-once>Starting Counter: {{ counter }}</p>`
 
 - v-model  
+  Reference: https://learnvue.co/2021/01/everything-you-need-to-know-about-vue-v-model/  
   Very often used in form where user provides input. There is no shorthand for v-model. It is a two way binding: both data binding and event binding together by
 
   1. listening to the input element for updating the data "newName"
