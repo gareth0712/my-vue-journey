@@ -1,25 +1,13 @@
 <template>
   <section class="post-list">
     <post-preview
-      id="1"
       :is-admin="isAdmin"
-      thumbnail="/code.jpg"
-      title="Why coders like Typescript over Javascript"
-      previewText="This is my first post!"
-    />
-    <post-preview
-      id="2"
-      :is-admin="isAdmin"
-      thumbnail="/code2.jpg"
-      title="Why coders like Stack overflow"
-      previewText="This is my second post!"
-    />
-    <post-preview
-      id="3"
-      :is-admin="isAdmin"
-      thumbnail="/code3.jpg"
-      title="Why coders like VS Code"
-      previewText="This is my third post!"
+      v-for="post in posts"
+      :key="post.id"
+      :id="post.id"
+      :thumbnail="post.thumbnail"
+      :title="post.title"
+      :previewText="post.previewText"
     />
   </section>
 </template>
@@ -35,6 +23,10 @@ export default {
     isAdmin: {
       type: Boolean,
       default: false,
+    },
+    posts: {
+      type: Array,
+      required: true,
     },
   },
 };

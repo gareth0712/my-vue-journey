@@ -5,21 +5,6 @@ More information about the usage of this directory in [the documentation](https:
 
 ![Pages, layout and components](../static/layout-pages-components.png)
 
-## Layout
-
-[More on Views, Layouts etc](https://nuxtjs.org/guide/views)
-
-### Custom Layout
-
-- Without specifying the layout option of a vue file, pages component will use /layout/default.vue.
-- If we create a new layout file, say, users.vue. The file must contain the `<nuxt />` tag in order for pages component to take place.
-- Then we apply the layout in the pages component using the property `layout: 'users'` as property that is interpret by Nuxt, not Vue
-- If you would like to apply custom layout for a certain page, you should do it also for any nested pages under that page
-
-### error.vue
-
-- A reserved named file that will be loaded whenever your Nuxt application throw an error
-
 ## Routing
 
 [More on Routing in Nuxt](https://nuxtjs.org/guide/routing)
@@ -85,3 +70,124 @@ We then do the following:
 2. Move every line of code inside "/users/index.vue" to "users.vue"
 3. Add a tag `<nuxt-child />` inside "users.vue" for any content you would like
 4. Place any content you would like in "/users/index.vue" just to make sure there is content to show in "/users" route
+
+## Data
+
+### asyncData
+
+- This method favors SSR so that in case we need to retrieve the data from server, the html will be pre-rendered in the server when all the data has received and send to the client. Then when we review the source code in browser, we can also see the data in the page.
+- However, asyncData is executed on the server. And if we execute an asynchronous task, it will wait for this task to finish before it returns to page to the client.
+- Hence we will get a pre-rendered and completed page when we review the source code of the page and so do the crawler.
+- Nuxt will only call this method in pages folder, not anywhere in components. So if you added in a component in one of your other components, like in a layout or in the components folder, this will simply not be executed and it will not work correctly.
+- Inside the asyncData method, the `this` keyword does not work as expected because asyncData runs before this component is actually created. If we try to access a method or a field from the normal data or anything like that, `this` will not give you the Vue component instance. We won't be able to access methods and so on because the component has not been created yet. we can't access the finished Vue component instance because it is not finished yet.
+- Without `this`, We can make use of the `context` variable given as the first argument of the asyncData method => it provides properties pretty much the same as the Vue instance e.g. store, route
+- This method is pretty much the same as the normal data method in the sense that in the end it has to return an object, which will be the data of this component.
+
+- Example:  
+  So what we're doing now is we're executing this timeout function and we're returning a JavaScript object
+  which holds our loaded posts.  
+  A) Use context and callback: We are calling a callback inside the setTimeout function. It executes a callback method that first passes an error object (this will throw an error upon executes this line) and second argument is the javascript object, i.e. the data, that we can access from client when the request completed gracefully
+
+```
+asyncData(context, callback) {
+    setTimeout(() => {
+      callback(null, {
+        loadedPosts: [
+          {
+            id: '1',
+            title: 'frst post',
+            previewText: 'This is preview text',
+            thumbnail: '/code.jpg',
+          },
+          {
+            id: '2',
+            title: 'second post',
+            previewText: 'This is preview text',
+            thumbnail: '/code.jpg',
+          },
+          {
+            id: '3',
+            title: 'third post',
+            previewText: 'This is preview text',
+            thumbnail: '/code.jpg',
+          },
+        ],
+      });
+    }, 1500);
+  },
+```
+
+With error:
+
+```
+asyncData(context, callback) {
+    setTimeout(() => {
+      callback(new Error('Error getting data), {
+        loadedPosts: [
+          {
+            id: '1',
+            title: 'frst post',
+            previewText: 'This is preview text',
+            thumbnail: '/code.jpg',
+          },
+          {
+            id: '2',
+            title: 'second post',
+            previewText: 'This is preview text',
+            thumbnail: '/code.jpg',
+          },
+          {
+            id: '3',
+            title: 'third post',
+            previewText: 'This is preview text',
+            thumbnail: '/code.jpg',
+          },
+        ],
+      });
+    }, 1500);
+  },
+```
+
+B) Return a Promise: we return a promise in asyncData, then async data will take that promise and listen to it and render to page once it is resolved.
+
+```
+asyncData() {
+  // Alternative: we return a promise in asyncData, then async data will take that promise and listen to it and render to page once it is resolved.
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        loadedPosts: [
+          {
+            id: '1',
+            title: 'frst post',
+            previewText: 'This is preview text',
+            thumbnail: '/code.jpg',
+          },
+          {
+            id: '2',
+            title: 'second post',
+            previewText: 'This is preview text',
+            thumbnail: '/code.jpg',
+          },
+          {
+            id: '3',
+            title: 'third post',
+            previewText: 'This is preview text',
+            thumbnail: '/code.jpg',
+          },
+        ],
+      });
+      reject(new Error('Error getting data'));
+    }, 1500);
+  })
+    .then((data) => {
+      return data;
+    })
+    .catch((e) => {
+      // context.error helps throw the error to nuxt
+      context.error(e);
+    });
+},
+```
+
+- AsyncData does not always run on the server. It only does so when we are loading the page for the first time. After the page is loaded (i.e. the page is created in server and rendered on client), it stays in the client and whenever we go back to the page with the asyncData property by navigating around, it will be data that's already rendered in client. We can try to insert a console.log inside asyncData to test this.

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import BeginnerHeader from '~/components/BeginnerHeader';
+import BeginnerHeader from '~/components/Navigation/BeginnerHeader';
 
 export default {
   components: {

@@ -3,7 +3,7 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <post-list />
+    <post-list :posts="loadedPosts" />
   </div>
 </template>
 
@@ -13,6 +13,68 @@ import PostList from '~/components/Posts/PostList';
 export default {
   components: {
     PostList,
+  },
+  // asyncData(context, callback) {
+  //   setTimeout(() => {
+  //     // execute a callback method that first passes an error handling method (if error occurs, otherwise just put null) and second argument is the javascript object, i.e. the data, that we can access from client when the request completed gracefully
+  //     callback(null, {
+  //       loadedPosts: [
+  //         {
+  //           id: '1',
+  //           title: 'frst post',
+  //           previewText: 'This is preview text',
+  //           thumbnail: '/code.jpg',
+  //         },
+  //         {
+  //           id: '2',
+  //           title: 'second post',
+  //           previewText: 'This is preview text',
+  //           thumbnail: '/code.jpg',
+  //         },
+  //         {
+  //           id: '3',
+  //           title: 'third post',
+  //           previewText: 'This is preview text',
+  //           thumbnail: '/code.jpg',
+  //         },
+  //       ],
+  //     });
+  //   }, 1500);
+  // },
+  asyncData() {
+    // Alternative: we return a promise in asyncData, then async data will take that promise and listen to it and render to page once it is resolved.
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          loadedPosts: [
+            {
+              id: '1',
+              title: 'frst post',
+              previewText: 'This is preview text',
+              thumbnail: '/code.jpg',
+            },
+            {
+              id: '2',
+              title: 'second post',
+              previewText: 'This is preview text',
+              thumbnail: '/code.jpg',
+            },
+            {
+              id: '3',
+              title: 'third post',
+              previewText: 'This is preview text',
+              thumbnail: '/code.jpg',
+            },
+          ],
+        });
+      }, 1500);
+    })
+      .then((data) => {
+        return data;
+      })
+      .catch((e) => {
+        context.error(new Error('This is error'));
+      });
   },
 };
 </script>
